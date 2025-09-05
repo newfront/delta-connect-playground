@@ -1,0 +1,28 @@
+services:
+  deltalake:
+    image: newfrontdocker/delta-connect-playground:latest
+    hostname: delta-connect-playground
+    container_name: delta-connect-playground
+    environment:
+      - SPARK_LOCAL_HOSTNAME=localhost
+      - PYSPARK_TOTAL_CORES=${PYSPARK_TOTAL_CORES:-4}
+      - PYSPARK_DRIVER_MEMORY=${PYSPARK_DRIVER_MEMORY:-8g}
+      - SPARK_REMOTE=sc://0.0.0.0
+    volumes:
+      - ${PWD}:/opt/spark/work-dir/playground
+      - ${PWD}/scripts/:/opt/spark/work-dir/scripts/
+      - ${PWD}/logs/:/opt/spark/logs/
+      - ./startup.sh:/opt/spark/work-dir/startup.sh
+    ports:
+      - "8888-8889:8888-8889"
+      - "15002:15002"
+      - "4040:4040"
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 16G
+        reservations:
+          cpus: '2'
+          memory: 4G
+    restart: unless-stopped
