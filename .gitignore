@@ -2,3 +2,11 @@
 
 .ipynb_checkpoints
 
+# ignore the gigantic local files (~14gb)
+datasets/ecomm_raw/*.csv
+
+# ignore the 700MB compressed (zstd) parquet
+datasets/ecomm_raw/parquet
+
+# ignore the 800MB compressed (zstd) delta tables
+datasets/ecomm_raw/delta
