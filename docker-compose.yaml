@@ -1,0 +1,57 @@
+services:
+  delta-connect-server:
+    image: newfrontdocker/delta-connect-playground:latest
+    command: ["server"]
+    hostname: delta-connect-server
+    container_name: delta-connect-server
+    environment:
+      - SPARK_LOCAL_HOSTNAME=delta-connect-server
+      - PYSPARK_TOTAL_CORES=${PYSPARK_TOTAL_CORES:-4}
+      - PYSPARK_DRIVER_MEMORY=${PYSPARK_DRIVER_MEMORY:-8g}
+    volumes:
+      - ${PWD}/datasets:/opt/spark/work-dir/datasets
+    ports:
+      - "15002:15002"
+      - "4040:4040"
+    networks:
+      - connect
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 16G
+        reservations:
+          cpus: '2'
+          memory: 4G
+    restart: unless-stopped
+
+  delta-connect-playground:
+    image: newfrontdocker/delta-connect-playground:latest
+    command: ["client"]
+    hostname: delta-connect-playground
+    container_name: delta-connect-playground
+    environment:
+      - SPARK_LOCAL_HOSTNAME=delta-connect-playground
+      - PYSPARK_TOTAL_CORES=${PYSPARK_TOTAL_CORES:-4}
+      - PYSPARK_DRIVER_MEMORY=${PYSPARK_DRIVER_MEMORY:-8g}
+      - SPARK_REMOTE=sc://delta-connect-server
+    volumes:
+      - ${PWD}/notebooks:/opt/spark/work-dir/playground
+      - ${PWD}/warehouse:/opt/spark/work-dir/warehouse
+      - ${PWD}/datasets:/opt/spark/work-dir/datasets
+    ports:
+      - "8888-8889:8888-8889"
+      - "4041:4041"
+    networks:
+      - connect
+    deploy:
+      resources:
+        reservations:
+          cpus: '2'
+          memory: 4G
+    restart: unless-stopped
+
+networks:
+  connect:
+    external: true
+    name: connect
