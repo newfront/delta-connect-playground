@@ -1,6 +1,6 @@
 services:
   delta-connect-server:
-    image: newfrontdocker/delta-connect-playground:latest
+    image: newfrontdocker/delta-connect-playground:4.0.0
     command: ["server"]
     hostname: delta-connect-server
     container_name: delta-connect-server
@@ -26,7 +26,7 @@ services:
     restart: unless-stopped
 
   delta-connect-playground:
-    image: newfrontdocker/delta-connect-playground:latest
+    image: newfrontdocker/delta-connect-playground:4.0.0
     command: ["client"]
     hostname: delta-connect-playground
     container_name: delta-connect-playground

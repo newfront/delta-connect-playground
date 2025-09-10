@@ -11,6 +11,8 @@ docker build \
   -t newfrontdocker/delta-connect-playground:latest .
 ~~~
 
+> The image doesn't need to be built if you want to use what is in Docker Hub: [newfrontdocker/delta-connect-playground:4.0.0](https://hub.docker.com/r/newfrontdocker/delta-connect-playground/tags)
+
 ## Creating the Docker Network
 ~~~
 docker network create connect
@@ -87,3 +89,12 @@ Connection to localhost port 15002 [tcp/*] succeeded!
 * [Delta Lake](https://delta.io/) - main Delta Lake docs
 * Delta Connect Server: https://mvnrepository.com/artifact/io.delta/delta-connect-server_2.13/4.0.0
 * Delta Connect Client: https://mvnrepository.com/artifact/io.delta/delta-connect-client_2.13/4.0.0
+
+## Release the base container
+~~~
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  -t newfrontdocker/delta-connect-playground:4.0.0 \
+  -f Dockerfile \
+  .
+~~~
