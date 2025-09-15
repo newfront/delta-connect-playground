@@ -98,3 +98,9 @@ docker buildx build \
   -f Dockerfile \
   .
 ~~~
+---
+## Special Thanks
+
+Thanks to [Buf](https://buf.build/home) for enabling me to work on this project for the Open Source Community. Check out the following links to learn more about Buf:
+* [Buf's Protobuf toolchain](https://buf.build/product/cli) - with simple Protobuf compilation, linting, and breaking-change detection.
+* [Bufstream](https://buf.build/product/bufstream) - our drop-in replacement for Kafka with [Broker-Side Protobuf Semantic Validation](https://buf.build/blog/semantic-validation).
