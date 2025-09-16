@@ -51,22 +51,9 @@ case "$1" in
     # check if SPARK_REMOTE is set
     # if not, use local docker network from docker-compose.yaml
     if [ -z "${SPARK_REMOTE}" ]; then
-      export SPARK_REMOTE="sc://connect"
+      export SPARK_REMOTE="sc://delta-connect-server"
     fi
 
-    #export PYSPARK_DRIVER_PYTHON=jupyter
-    #export PYSPARK_DRIVER_PYTHON_OPTS='lab --ip=0.0.0.0'
-    #export DELTA_SPARK_VERSION='4.0.0'
-    #export DELTA_PACKAGE_VERSION=delta-spark_2.13:${DELTA_SPARK_VERSION}
-    #CMD=(
-    #  "$SPARK_HOME/bin/pyspark --packages io.delta:${DELTA_PACKAGE_VERSION},io.delta:delta-connect-client_2.13:${DELTA_SPARK_VERSION},com.google.protobuf:protobuf-java:3.25.1"
-    #  --conf "spark.ui.port=4041"
-    #  --conf "spark.driver.extraJavaOptions=-Divy.cache.dir=/tmp -Divy.home=/tmp -Dio.netty.tryReflectionSetAccessible=true"
-    #  --conf "io.delta:delta-connect-client_2.13:${DELTA_SPARK_VERSION},com.google.protobuf:protobuf-java:3.25.1"
-    #  --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension"
-    #  --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
-    #  "$@"
-    #)
     CMD=(
       "$WORKDIR/startup.sh"
     )
