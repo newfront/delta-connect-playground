@@ -7,8 +7,11 @@ We need to build an image with the additional Python dependencies required for P
 Take a peek at the [entrypoint.sh](./scripts/entrypoint.sh) file to see how the container runs. There are two available modes: `server` and `client`. These options are passed from the docker-compose.yaml via `command: ["server"]` or `command: ["client"]`. 
 
 ~~~bash
-docker build \
-  -t newfrontdocker/delta-connect-playground:latest .
+docker buildx build \
+  -t newfrontdocker/delta-connect-playground:latest \
+  -f Dockerfile \
+  --load \
+  .
 ~~~
 
 > The image doesn't need to be built if you want to use what is in Docker Hub: [newfrontdocker/delta-connect-playground:4.0.0](https://hub.docker.com/r/newfrontdocker/delta-connect-playground/tags)
@@ -92,10 +95,12 @@ Connection to localhost port 15002 [tcp/*] succeeded!
 
 ## Release the base container
 ~~~
+export VERSION=latest
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
-  -t newfrontdocker/delta-connect-playground:4.0.0 \
+  -t newfrontdocker/delta-connect-playground:${VERSION} \
   -f Dockerfile \
+  --push \
   .
 ~~~
 ---
