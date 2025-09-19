@@ -1,4 +1,4 @@
-FROM newfrontdocker/delta-docker:4.0.0
+FROM deltaio/delta-docker:4.0.0
 
 ARG NBuser=NBuser
 ARG GROUP=NBuser
